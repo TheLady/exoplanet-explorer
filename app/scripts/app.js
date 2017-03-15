@@ -35,7 +35,10 @@ Instructions:
 
     Your code goes here!
      */
-  }
+     return fetch( url, {
+      // method: 'get' is implied here
+     })
+  };
 
   /**
    * Performs an XHR for a JSON and returns a parsed JSON response.

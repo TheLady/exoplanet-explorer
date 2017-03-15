@@ -19,7 +19,7 @@ Instructions:
    * Helper function to show the search query.
    * @param {String} query - The search query.
    */
-  function addSearchHeader(query) {
+  function addSearchHeader( query ) {
     home.innerHTML = '<h2 class="page-title">query: ' + query + '</h2>';
   }
 
@@ -28,39 +28,51 @@ Instructions:
    * @param  {String} url - The URL to fetch.
    * @return {Promise}    - A Promise that resolves when the XHR succeeds and fails otherwise.
    */
-  function get(url) {
+  function get( url ) {
     /*
     Use the Fetch API to GET a URL.
     Return the fetch.
 
     Your code goes here!
      */
-     return fetch( url, {
-      // method: 'get' is implied here
-     })
+  //    return fetch( url, {
+  //     method: 'get'  get is implied so they usethe code below
+  //    })
   };
-
+  function get( url ) {
+    return fetch( url );
+  };
   /**
    * Performs an XHR for a JSON and returns a parsed JSON response.
    * @param  {String} url - The JSON URL to fetch.
    * @return {Promise}    - A promise that passes the parsed JSON response.
    */
-  function getJSON(url) {
-    /*
-    Return a Promise that gets a URL and parses the JSON response. Use your get method!
+  function getJSON( url ) {
+    // Return a Promise that gets a URL and parses the JSON response. Use your get method!
 
-    Your code goes here!
-     */
-  }
+    // Your code goes here!
+    //  */
+    return get ( url ).then( function( response) {
+      return response.json(); //same as json.parse
+    });
+  };
+//for testing
+  window.addEventListener( 'WebComponentsReady', function() {
+    home = document.querySelector('section[data-route="home"]' );
 
-  window.addEventListener('WebComponentsReady', function() {
-    home = document.querySelector('section[data-route="home"]');
-    /*
-    Uncomment the next line when you're ready to test!
-    Don't forget to chain with a .then and a .catch!
 
-    Your code goes here too!
-     */
-    // getJSON('../data/earth-like-results.json')
+    // Uncomment the next line when you're ready to test!
+    // Don't forget to chain with a .then and a .catch!
+
+    // Your code goes here too!
+    getJSON( '../data/earth-like-results.json' )
+    .then( function( response ) {
+      addSearchHeader( response.query );
+      console.log( response );
+    })
+    .catch( function( error) {
+      addSearchHeader( 'unknown' );
+      console.log(error);
+    })
   });
 })(document);
